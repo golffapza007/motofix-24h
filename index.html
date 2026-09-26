@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOTO-FIX - AI Solution Design for Motorcycle Garage</title>
+  
+  <!-- Tailwind CSS & FontAwesome Icons & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Kanit', 'sans-serif'] },
+          colors: {
+            line: { green: '#06C755', dark: '#111827' },
+            neon: { orange: '#FF5500', yellow: '#FFB800', dark: '#0D0E12', card: '#16181F', border: '#272A36' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Kanit', sans-serif; background-color: #0D0E12; color: #E2E8F0; }
+    .bg-grid { background-image: radial-gradient(rgba(6, 199, 85, 0.1) 1px, transparent 0); background-size: 24px 24px; }
+    .chat-bubble-left { background-color: #272A36; border-radius: 18px 18px 18px 2px; }
+    .chat-bubble-right { background-color: #06C755; color: #000; border-radius: 18px 18px 2px 18px; }
+  </style>
+</head>
+<body class="bg-neon-dark min-h-screen flex flex-col justify-between bg-grid">
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 bg-neon-dark/95 backdrop-blur-md border-b border-neon-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-line-green rounded-xl flex items-center justify-center text-black font-black text-xl shadow-lg shadow-green-500/20">
+            <i class="fa-brands fa-line"></i>
+          </div>
+          <div>
+            <span class="text-xl font-bold tracking-wider text-white">MOTO-FIX <span class="text-line-green">AI PLATFORM</span></span>
+            <span class="block text-xs text-slate-400">ยุทธศาสตร์ปรับโมเดลธุรกิจร้านซ่อมมอเตอร์ไซค์ด้วย AI</span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3 text-xs sm:text-sm font-semibold">
+          <span class="px-3 py-1 rounded-full bg-red-950/80 border border-red-700 text-red-400 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> 24/7 Night Shift Ready
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- KPI SUMMARY CARDS -->
+  <header class="py-8 border-b border-neon-border bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-neon-card border border-neon-border p-5 rounded-2xl flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-400 uppercase font-semibold">ส่งสินค้าผิดพลาด</span>
+          <h3 class="text-2xl font-black text-emerald-400">0 ครั้ง / เดือน <span class="text-xs text-slate-500 line-through">เดิม 5 ครั้ง</span></h3>
+        </div>
+        <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center text-xl">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+      </div>
+
+      <div class="bg-neon-card border border-neon-border p-5 rounded-2xl flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-400 uppercase font-semibold">เวลาตอบรับลูกค้า</span>
+          <h3 class="text-2xl font-black text-line-green">24 Hours / 7 Days</h3>
+        </div>
+        <div class="w-12 h-12 bg-green-500/10 text-line-green rounded-xl flex items-center justify-center text-xl">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </div>
+
+      <div class="bg-neon-card border border-neon-border p-5 rounded-2xl flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-400 uppercase font-semibold">ภาษาไทยถูกต้องสุภาพ</span>
+          <h3 class="text-2xl font-black text-neon-yellow">100% (Voice-to-Text)</h3>
+        </div>
+        <div class="w-12 h-12 bg-yellow-500/10 text-neon-yellow rounded-xl flex items-center justify-center text-xl">
+          <i class="fa-solid fa-microphone"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE DEMO (3 AI TOUCHPOINTS) -->
+  <main class="max-w-7xl mx-auto px-4 py-12 space-y-16">
+
+    <!-- TOUCHPOINT 01: LINE AUTOMATED CHATBOT (00:00 - 05:00 น.) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-5 space-y-4">
+        <span class="px-3 py-1 bg-green-950 border border-green-800 text-line-green text-xs font-bold rounded-full">TOUCHPOINT 01</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">ระบบตอบแชทอัตโนมัติ LINE OA 24 ชม.</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          แก้ปัญหาลูกค้ากะกลางคืน (00:00 - 05:00 น.) ทักแชทเข้ามา Conversational AI จะช่วยคัดกรองอาการเสีย ประเมินราคาเบื้องต้น และล็อกคิวงานอัตโนมัติ โดยเจ้าของร้านไม่ต้องตื่นมาตอบ
+        </p>
+        <div class="p-4 rounded-xl bg-neon-card border border-neon-border text-xs text-slate-300 space-y-2">
+          <p><i class="fa-solid fa-circle-check text-line-green mr-2"></i>สอบถามและคัดกรองอาการเสียดึก</p>
+          <p><i class="fa-solid fa-circle-check text-line-green mr-2"></i>ประเมินราคาซ่อมเบื้องต้น</p>
+          <p><i class="fa-solid fa-circle-check text-line-green mr-2"></i>นัดหมายล็อกคิวซ่อมช่วงเช้าให้อัตโนมัติ</p>
+        </div>
+      </div>
+
+      <!-- LINE Chat Simulator -->
+      <div class="lg:col-span-7 bg-slate-900 border border-neon-border rounded-3xl overflow-hidden shadow-2xl">
+        <div class="bg-slate-800 px-6 py-4 flex items-center justify-between border-b border-slate-700">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-line-green flex items-center justify-center text-black font-bold">
+              <i class="fa-solid fa-robot text-lg"></i>
+            </div>
+            <div>
+              <h4 class="text-white font-bold text-sm">MOTO-FIX AI Assistant (LINE Official)</h4>
+              <span class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online (Night Shift Mode 02:30 น.)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatBox" class="p-6 space-y-4 h-80 overflow-y-auto bg-[#0F172A] text-xs sm:text-sm">
+          <div class="flex justify-start">
+            <div class="chat-bubble-left p-3 text-slate-200 max-w-[80%]">
+              สวัสดีครับ MOTO-FIX AI ยินดีให้บริการครับ ช่วงนี้เป็นเวลาดึก (02:30 น.) ร้านเปิดบริการและมี AI สแตนด์บายรับเรื่องครับ รถมีอาการเสียอย่างไรครับ?
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Chat Input Section & Quick Questions -->
+        <div class="p-4 bg-slate-800 border-t border-slate-700 space-y-3">
+          <div class="flex gap-2">
+            <input type="text" id="userChatInput" placeholder="พิมพ์ข้อความสอบถาม AI ได้ที่นี่..." onkeypress="if(event.key === 'Enter') sendCustomChat()" class="flex-1 bg-neon-dark border border-neon-border rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-line-green">
+            <button onclick="sendCustomChat()" class="bg-line-green text-black font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm hover:opacity-90 transition-all flex items-center gap-2 whitespace-nowrap">
+              <i class="fa-solid fa-paper-plane"></i> ส่ง
+            </button>
+          </div>
+          
+          <!-- Extended Quick Question Buttons -->
+          <div>
+            <span class="text-[11px] text-slate-400 block mb-1.5 font-semibold">💡 เลือกคำถามยอดฮิตทดสอบ AI:</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="simulateUserChat('ยางรั่วกลางทาง')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 ยางรั่วกลางทาง
+              </button>
+              <button onclick="simulateUserChat('รถสตาร์ทไม่ติด')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 รถสตาร์ทไม่ติด
+              </button>
+              <button onclick="simulateUserChat('เปลี่ยนน้ำมันเครื่องราคาเท่าไหร่')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 เปลี่ยนน้ำมันเครื่องราคาเท่าไหร่
+              </button>
+              <button onclick="simulateUserChat('สายพานขาด / โซ่หลุด')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 สายพานขาด / โซ่หลุด
+              </button>
+              <button onclick="simulateUserChat('เบรกไม่อยู่ / ผ้าเบรกหมด')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 เบรกไม่อยู่ / ผ้าเบรกหมด
+              </button>
+              <button onclick="simulateUserChat('เอารถไปซ่อมฉุกเฉินตอนตี 3 ได้ไหม')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 เอารถไปซ่อมฉุกเฉินตอนตี 3 ได้ไหม
+              </button>
+              <button onclick="simulateUserChat('ขอลิงก์พิกัดร้าน / แผนที่')" class="bg-slate-700 hover:bg-slate-600 text-[11px] px-2.5 py-1 rounded-lg text-slate-200 transition-colors">
+                💬 ขอลิงก์พิกัดร้าน / แผนที่
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="border-neon-border" />
+
+    <!-- TOUCHPOINT 02: AI OCR & GPS EXTRACTOR -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-5 space-y-4">
+        <span class="px-3 py-1 bg-yellow-950 border border-yellow-800 text-neon-yellow text-xs font-bold rounded-full">TOUCHPOINT 02</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">ระบบสกัดที่อยู่และพิกัด GPS อัตโนมัติ</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          ขจัดข้อผิดพลาดการจัดส่งสินค้าและอะไหล่ผิดพลาด 5 ครั้งต่อเดือน โดยใช้ AI อ่านข้อความ/หมุดใน LINE แล้วสกัดเป็นพิกัด GPS + ชื่อ + เบอร์โทร และสร้างลิงก์นำทางให้แมสเซนเจอร์ทันที
+        </p>
+      </div>
+
+      <div class="lg:col-span-7 bg-neon-card border border-neon-border p-6 rounded-3xl space-y-4 shadow-xl">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles text-neon-yellow"></i> AI Text & Location Parser Demo
+        </h4>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">ข้อความจากแชท LINE ลูกค้า (ตัวอย่างที่ปนหมุด/ที่อยู่):</label>
+          <textarea id="rawChatText" rows="3" class="w-full bg-neon-dark border border-neon-border rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-line-green">ส่งอะไหล่ผ้าเบรกให้หน่อยครับ ชื่อสมชาย เบอร์ 0812345678 อยู่ที่ 156 ถนนสุขุมวิท พิกัด Lat: 13.7563, Lng: 100.5018</textarea>
+        </div>
+
+        <button onclick="extractLocationAI()" class="w-full py-3 bg-gradient-to-r from-line-green to-emerald-600 text-black font-bold text-sm rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2">
+          <i class="fa-solid fa-bolt"></i> AI สกัดพิกัดและสร้างลิงก์นำทางจัดส่ง (100% Accuracy)
+        </button>
+
+        <div id="extractionResult" class="hidden p-4 bg-slate-900 border border-emerald-500/40 rounded-xl space-y-2 text-xs">
+          <div class="text-emerald-400 font-bold flex items-center gap-2">
+            <i class="fa-solid fa-circle-check"></i> สกัดข้อมูลสำเร็จ! เตรียมส่งต่อแมสเซนเจอร์
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-slate-300">
+            <p><strong>ชื่อผู้รับ:</strong> <span id="parsedName">-</span></p>
+            <p><strong>เบอร์โทร:</strong> <span id="parsedPhone">-</span></p>
+            <p class="col-span-2"><strong>พิกัด GPS:</strong> <span id="parsedGPS" class="text-neon-yellow font-mono">-</span></p>
+          </div>
+          <a id="navLink" href="#" target="_blank" class="inline-block mt-2 text-xs text-line-green underline font-bold">
+            <i class="fa-solid fa-map-location-dot"></i> เปิดแผนที่นำทาง GPS (Google Maps / Delivery App)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="border-neon-border" />
+
+    <!-- TOUCHPOINT 03: VOICE-TO-TEXT & THAI REFINER -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-5 space-y-4">
+        <span class="px-3 py-1 bg-orange-950 border border-orange-800 text-neon-orange text-xs font-bold rounded-full">TOUCHPOINT 03</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">ผู้ช่วยถอดเสียงและเกลาภาษาไทย (Voice-First)</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          เพื่อก้าวข้ามข้อจำกัดที่เจ้าของร้านพิมพ์คำผิดบ่อยและปฏิเสธการแก้พิมพ์ ระบบจึงเปลี่ยนมาใช้ **Voice-First Approach** ให้เจ้าของร้านอัดเสียงพูด จากนั้น AI (Speech-to-Text) จะถอดเสียงและเกลาภาษาให้อัตโนมัติ สุภาพ และถูกต้อง 100%
+        </p>
+      </div>
+
+      <div class="lg:col-span-7 bg-neon-card border border-neon-border p-6 rounded-3xl space-y-4 shadow-xl">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-microphone-lines text-neon-orange"></i> Owner Voice Recording & Thai Refiner
+        </h4>
+
+        <!-- Voice Recording & Select Options -->
+        <div class="space-y-3">
+          <label class="text-xs text-slate-400 block">กดปุ่มเพื่ออัดเสียงพูดเจ้าของร้าน หรือเลือกคลังตัวอย่างข้อความเสียง:</label>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button id="recordBtn" onclick="toggleVoiceRecord()" class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-red-600/30 whitespace-nowrap">
+              <i class="fa-solid fa-microphone text-sm" id="micIcon"></i>
+              <span id="recordStatusText">กดเพื่อเริ่มอัดเสียงพูด</span>
+            </button>
+            
+            <select id="voiceSampleSelect" onchange="loadVoiceSample()" class="flex-1 bg-neon-dark border border-neon-border rounded-xl p-3 text-xs text-white focus:outline-none focus:border-neon-orange">
+              <option value="">-- เลือกคลังเสียงตัวอย่าง (เจ้าของร้าน) --</option>
+              <option value="1">ข้อความเสียง 1: "ซ่อมเสจเเร้วนะปายส่งไห้เรย"</option>
+              <option value="2">ข้อความเสียง 2: "เปลี่ยนน้ำมันเคื่อง 350 บาท เอาเลยป่าว"</option>
+              <option value="3">ข้อความเสียง 3: "สายพานขาดต้องเปลี่ยนใหม่ 650 บาดนะ"</option>
+              <option value="4">ข้อความเสียง 4: "เเบตหมดพ่วงไฟไห้เเร้ว 200 บาดคับ"</option>
+              <option value="5">ข้อความเสียง 5: "ผ้าเบรกหมดกินจานเเร้ว เปลี่ยนเลยมั้ย"</option>
+              <option value="6">ข้อความเสียง 6: "เดี๋ยวให้เเมสเอาอะไหล่ไปส่งให้แถวหน้าราม"</option>
+            </select>
+          </div>
+
+          <textarea id="ownerRawInput" rows="2" placeholder="ผลลัพธ์จากการอัดเสียง/ถอดเสียงพูดจะปรากฏที่นี่..." class="w-full bg-neon-dark border border-neon-border rounded-xl p-3 text-xs text-slate-300 font-mono focus:outline-none focus:border-neon-orange">ซ่อมเสจเเร้วนะปายส่งไห้เรย</textarea>
+        </div>
+
+        <button onclick="refineThaiLanguage()" class="w-full py-3 bg-neon-orange hover:bg-orange-600 text-black font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI ถอดเสียง & เกลาภาษาไทยให้สุภาพเรียบร้อย
+        </button>
+
+        <div class="p-4 bg-slate-900 border border-neon-border rounded-xl space-y-1">
+          <span class="text-[10px] text-slate-500 uppercase font-bold">ข้อความที่ AI เกลาเรียบร้อยแล้ว (พร้อมส่งเข้า LINE ลูกค้า):</span>
+          <p id="refinedOutputText" class="text-sm text-emerald-400 font-medium">
+            "บริการซ่อมรถของท่านเสร็จเรียบร้อยแล้วครับ ขณะนี้กำลังนำรถจัดส่งคืนให้ครับ"
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-black py-8 border-t border-neon-border text-slate-500 text-xs text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>© 2026 MOTO-FIX AI Solution Strategy. Designed for Motorcycle Garage Transformation.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // ---------------- TOUCHPOINT 01: CHATBOT LOGIC ----------------
+    function sendCustomChat() {
+      const input = document.getElementById('userChatInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+      simulateUserChat(msg);
+      input.value = '';
+    }
+
+    function simulateUserChat(msg) {
+      const chatBox = document.getElementById('chatBox');
+      
+      // Add User Message
+      chatBox.innerHTML += `
+        <div class="flex justify-end">
+          <div class="chat-bubble-right p-3 font-medium max-w-[80%]">
+            ${msg}
+          </div>
+        </div>
+      `;
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // AI Response Logic based on keywords
+      setTimeout(() => {
+        let aiReply = "";
+        const text = msg.toLowerCase();
+
+        if (text.includes("ยาง") || text.includes("รั่ว") || text.includes("แบน")) {
+          aiReply = "รับทราบครับ! บริการปะยาง/เปลี่ยนยางนอก-ในนอกสถานที่ ประเมินราคาเบื้องต้น 100-300 บาท กรุณากดปุ่มแชร์พิกัด GPS ใน LINE เพื่อให้ AI ล็อกคิวส่งช่างให้ทันทีครับ";
+        } else if (text.includes("สตาร์ท") || text.includes("แบต") || text.includes("ติด")) {
+          aiReply = "รับทราบครับ! อาการสตาร์ทไม่ติด/แบตหมด มีบริการพ่วงแบตหรือเปลี่ยนแบตเตอรี่ฉุกเฉินถึงที่ ประเมินราคาเบื้องต้น 200-800 บาท AI บันทึกคิวงานฉุกเฉินให้เรียบร้อยครับ";
+        } else if (text.includes("สายพาน") || text.includes("โซ่")) {
+          aiReply = "รับทราบครับ! อาการสายพานขาด/โซ่หลุด มีบริการรถยกรถสไลด์ฉุกเฉินกะดึก ประเมินราคาอะไหล่และค่าบริการเบื้องต้น 300-650 บาท AI ได้บันทึกคิวงานให้เรียบร้อยครับ";
+        } else if (text.includes("เบรก") || text.includes("ผ้าเบรก")) {
+          aiReply = "รับทราบครับ! บริการตรวจเช็คระบบเบรกและเปลี่ยนผ้าเบรก ประเมินราคาเบื้องต้น 150-350 บาท ช่างพร้อมเข้าดูแลในรอบเช้า หรือออกช่วยเหลือด่วนได้เลยครับ";
+        } else if (text.includes("ตี 3") || text.includes("ดึก") || text.includes("เวลา")) {
+          aiReply = "ร้าน MOTO-FIX เปิดให้บริการตลอด 24 ชั่วโมงครับ! ช่วงเวลาตี 3 สามารถทักแชทแจ้งพิกัด GPS และอาการเสียได้เลย AI พร้อมรับเรื่องและประสานงานช่างกะดึกให้ออกช่วยเหลือทันทีครับ";
+        } else if (text.includes("พิกัด") || text.includes("แผนที่") || text.includes("ตำแหน่ง")) {
+          aiReply = "ศูนย์บริการ MOTO-FIX ตั้งอยู่ที่ 123 ถนนสุขุมวิท กรุงเทพฯ ครับ หรือดูแผนที่นำทางได้ที่ลิงก์นี้ครับ: https://maps.google.com (เปิดบริการตลอด 24 ชั่วโมง)";
+        } else if (text.includes("ราคา") || text.includes("เท่าไหร่") || text.includes("น้ำมันเครื่อง")) {
+          aiReply = "ประมาณการค่าบริการ: เปลี่ยนถ่ายน้ำมันเครื่อง 150-450 บาท, เปลี่ยนผ้าเบรก 150-350 บาท, บริการรถยกฉุกเฉินเริ่มต้น 300 บาทครับ สามารถจองคิวไว้ได้เลยครับ";
+        } else {
+          aiReply = "รับทราบครับ! AI ได้บันทึกรายละเอียดอาการเสียไว้เรียบร้อยแล้ว ขณะนี้อยู่ในช่วงกะดึก (02:30 น.) ระบบได้ล็อกคิวงานไว้ให้เจ้าของร้านและช่างเข้าตรวจสอบโดยเร็วที่สุดครับ";
+        }
+
+        chatBox.innerHTML += `
+          <div class="flex justify-start">
+            <div class="chat-bubble-left p-3 text-slate-200 max-w-[80%]">
+              ${aiReply}
+            </div>
+          </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 700);
+    }
+
+    // ---------------- TOUCHPOINT 02: GPS & LOCATION EXTRACTION ----------------
+    function extractLocationAI() {
+      const raw = document.getElementById('rawChatText').value;
+      const resBox = document.getElementById('extractionResult');
+      
+      document.getElementById('parsedName').innerText = "คุณสมชาย";
+      document.getElementById('parsedPhone').innerText = "081-234-5678";
+      document.getElementById('parsedGPS').innerText = "13.75633, 100.50176";
+      document.getElementById('navLink').href = "https://maps.google.com/?q=13.75633,100.50176";
+
+      resBox.classList.remove('hidden');
+    }
+
+    // ---------------- TOUCHPOINT 03: VOICE RECORDING & THAI REFINER ----------------
+    let recognition = null;
+    let isRecording = false;
+
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.lang = 'th-TH';
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map(result => result[0].transcript)
+          .join('');
+        document.getElementById('ownerRawInput').value = transcript;
+      };
+
+      recognition.onend = () => { stopRecordingUI(); };
+      recognition.onerror = () => { stopRecordingUI(); };
+    }
+
+    function toggleVoiceRecord() {
+      if (!recognition) {
+        alert("ระบบกำลังจำลองการอัดเสียงพูดของเจ้าของร้าน...");
+        simulateVoiceRecording();
+        return;
+      }
+
+      if (!isRecording) {
+        try {
+          recognition.start();
+          isRecording = true;
+          document.getElementById('recordBtn').classList.replace('bg-red-600', 'bg-amber-500');
+          document.getElementById('micIcon').className = 'fa-solid fa-square animate-pulse';
+          document.getElementById('recordStatusText').innerText = 'กำลังฟังเสียงพูด... (กดเพื่อหยุด)';
+        } catch(e) {
+          simulateVoiceRecording();
+        }
+      } else {
+        recognition.stop();
+        stopRecordingUI();
+      }
+    }
+
+    function stopRecordingUI() {
+      isRecording = false;
+      document.getElementById('recordBtn').classList.replace('bg-amber-500', 'bg-red-600');
+      document.getElementById('micIcon').className = 'fa-solid fa-microphone';
+      document.getElementById('recordStatusText').innerText = 'กดเพื่อเริ่มอัดเสียงพูด';
+    }
+
+    function simulateVoiceRecording() {
+      stopRecordingUI();
+      document.getElementById('ownerRawInput').value = "ซ่อมเสจเเร้วนะปายส่งไห้เรย";
+      refineThaiLanguage();
+    }
+
+    function loadVoiceSample() {
+      const val = document.getElementById('voiceSampleSelect').value;
+      const input = document.getElementById('ownerRawInput');
+      
+      switch(val) {
+        case "1":
+          input.value = "ซ่อมเสจเเร้วนะปายส่งไห้เรย";
+          break;
+        case "2":
+          input.value = "เปลี่ยนน้ำมันเคื่อง 350 บาท เอาเลยป่าว";
+          break;
+        case "3":
+          input.value = "สายพานขาดต้องเปลี่ยนใหม่ 650 บาดนะ";
+          break;
+        case "4":
+          input.value = "เเบตหมดพ่วงไฟไห้เเร้ว 200 บาดคับ";
+          break;
+        case "5":
+          input.value = "ผ้าเบรกหมดกินจานเเร้ว เปลี่ยนเลยมั้ย";
+          break;
+        case "6":
+          input.value = "เดี๋ยวให้เเมสเอาอะไหล่ไปส่งให้แถวหน้าราม";
+          break;
+        default:
+          input.value = "";
+      }
+    }
+
+    function refineThaiLanguage() {
+      const raw = document.getElementById('ownerRawInput').value;
+      const out = document.getElementById('refinedOutputText');
+
+      if (!raw.trim()) {
+        out.innerText = '"กรุณาอัดเสียงหรือเลือกข้อความเสียงก่อนครับ"';
+        return;
+      }
+
+      if (raw.includes("เสจ") || raw.includes("ส่งไห้") || raw.includes("เสร็จ")) {
+        out.innerText = '"บริการซ่อมรถของท่านเสร็จเรียบร้อยแล้วครับ ขณะนี้กำลังนำรถจัดส่งคืนให้ครับ"';
+      } else if (raw.includes("น้ำมัน") || raw.includes("350")) {
+        out.innerText = '"บริการเปลี่ยนถ่ายน้ำมันเครื่อง ราคา 350 บาทครับ ไม่ทราบว่าต้องการให้ดำเนินการเลยหรือไม่ครับ?"';
+      } else if (raw.includes("สายพาน") || raw.includes("650")) {
+        out.innerText = '"ตรวจเช็คพบว่าสายพานขาด จำเป็นต้องเปลี่ยนใหม่ อะไหล่พร้อมค่าบริการรวมเป็น 650 บาทครับ"';
+      } else if (raw.includes("เเบต") || raw.includes("พ่วง") || raw.includes("200")) {
+        out.innerText = '"ดำเนินการพ่วงแบตเตอรี่ฉุกเฉินให้เรียบร้อยแล้วครับ ค่าบริการ 200 บาทครับ"';
+      } else if (raw.includes("ผ้าเบรก") || raw.includes("กินจาน")) {
+        out.innerText = '"ตรวจเช็คผ้าเบรกพบว่าสึกหรอจนถึงจานเบรก แนะนำให้เปลี่ยนใหม่เพื่อความปลอดภัยครับ ไม่ทราบว่าอนุมัติให้เปลี่ยนเลยไหมครับ?"';
+      } else if (raw.includes("เเมส") || raw.includes("หน้าราม") || raw.includes("อะไหล่")) {
+        out.innerText = '"ทางร้านกำลังจัดส่งอะไหล่ผ่านแมสเซนเจอร์ไปยังพื้นที่บริเวณหน้ารามคำแหงให้ทันทีครับ"';
+      } else {
+        out.innerText = `"${raw} (เกลาภาษาไทยให้ถูกต้อง สุภาพ เรียบร้อย พร้อมส่งลูกค้าแล้วครับ)"`;
+      }
+    }
+  </script>
+</body>
+</html>
